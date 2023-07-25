@@ -26,7 +26,7 @@ urlpatterns = [
         name="api_manufacturers",
     ),
     path(
-        "manufacturers/<int:pk>/",
+        "manufacturers/<int:id>/",
         api_manufacturer,
         name="api_manufacturer",
     ),
@@ -36,7 +36,7 @@ urlpatterns = [
         name="api_vehicle_models",
     ),
     path(
-        "models/<int:pk>/",
+        "models/<int:id>/",
         api_vehicle_model,
         name="api_vehicle_model",
     ),

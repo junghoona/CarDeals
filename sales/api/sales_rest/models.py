@@ -1,5 +1,4 @@
 from django.db import models
-from inventory.api.inventory_rest.models import Automobile
 
 
 class AutomobileVO(models.Model):
@@ -23,7 +22,7 @@ class Customer(models.Model):
 
 class Sale(models.Model):
     automobile = models.ForeignKey(
-        Automobile,
+        AutomobileVO,
         related_name="sales",
         on_delete=models.PROTECT,
     )
@@ -37,10 +36,10 @@ class Sale(models.Model):
         related_name="sales",
         on_delete=models.PROTECT,
     )
-    price = models.DecimalField(max_digits=None, decimal_places=2)
+    price = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self):
         return f"{self.automobile} - {self.price}"
 
     class Meta:
-        ordering = ("automobile", "price") 
+        ordering = ("automobile", "price")

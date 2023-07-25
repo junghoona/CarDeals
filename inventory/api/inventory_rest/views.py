@@ -101,7 +101,7 @@ def api_manufacturers(request):
                 encoder=ManufacturerEncoder,
                 safe=False,
             )
-        except:
+        except Manufacturer.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not create the manufacturer"}
             )
@@ -175,7 +175,7 @@ def api_vehicle_models(request):
                 encoder=VehicleModelEncoder,
                 safe=False,
             )
-        except:
+        except VehicleModel.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not create the vehicle model"}
             )
