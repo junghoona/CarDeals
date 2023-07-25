@@ -8,6 +8,7 @@ class TechnicianEncoder(ModelEncoder):
         "first_name",
         "last_name",
         "employee_id",
+        "id",
     ]
 
 
@@ -20,6 +21,7 @@ class AppointmentEncoder(ModelEncoder):
         "vin",
         "customer",
         "technician",
+        "id",
     ]
 
     def get_extra_data(self, o):
