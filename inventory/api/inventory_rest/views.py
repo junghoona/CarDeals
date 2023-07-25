@@ -30,7 +30,7 @@ def api_automobiles(request):
                 encoder=AutomobileEncoder,
                 safe=False,
             )
-        except:
+        except Automobile.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not create the automobile"}
             )
