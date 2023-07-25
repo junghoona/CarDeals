@@ -2,7 +2,7 @@
 
 Team:
 
-* Julius Paktaghan - Service API
+* Julius Pagtakhan - Service API
 * John An - Sales API
 
 ## Design
