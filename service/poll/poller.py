@@ -14,12 +14,13 @@ from service_rest.models import AutomobileVO
 
 
 def get_automobiles():
-    response = requests.get("http://inventory-api:8100/api/automobiles/")
+    response = requests.get("http://localhost:8100/api/automobiles/")
     content = json.loads(response.content)
-    for automobile in content["autos"]:
+    for auto in content["autos"]:
         AutomobileVO.objects.update_or_create(
-            vin=automobile["vin"],
-            sold=automobile["sold"]
+            href=auto["href"],
+            vin=auto["vin"],
+            sold=auto["sold"],
         )
 
 
