@@ -11,6 +11,7 @@ import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
 import CustomersList from './CustomersList';
 import CustomersForm from './CustomersForm';
+import SalesList from './SalesList';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 
   const [salespeople, setSalespeople] = useState([]);
   const [customers, setCustomers] = useState([]);
+  const [sales, setSales] = useState([]);
 
   async function loadManufacturers() {
     const response = await fetch('http://localhost:8100/api/manufacturers/');
@@ -64,11 +66,27 @@ function App() {
       console.error(response);
     }
   }
+
+  async function loadSales() {
+    const response = await fetch('http://localhost:8090/api/sales/');
+    console.log(response);
+
+    if (response.ok) {
+      // Gets sales data
+      const data = await response.json();
+      console.log('SALES: ', data);
+      // using sales data
+      setSales(data.sales);
+    } else {
+      console.error(response);
+    }
+  }
   
   useEffect(() => {
     loadManufacturers();
     loadSalespeople();
     loadCustomers();
+    loadSales();
   },[]);
 
   if (manufacturers === undefined) {
@@ -80,6 +98,10 @@ function App() {
   }
 
   if (customers === undefined) {
+    return null;
+  }
+
+  if (sales === undefined) {
     return null;
   }
 
@@ -103,6 +125,10 @@ function App() {
           <Route path="customers">
             <Route path="new" element={<CustomersForm />} />
             <Route index element={<CustomersList customers={customers} />} />
+          </Route>
+          <Route path="sales">
+            {/* <Route path="new" element={<SalesForm />} /> */}
+            <Route index element={<SalesList sales={sales} />} />
           </Route>
         </Routes>
       </div>
