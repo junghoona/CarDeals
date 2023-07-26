@@ -10,6 +10,7 @@ import ManufacturersList from './ManufacturersList';
 import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
 import CustomersList from './CustomersList';
+import CustomersForm from './CustomersForm';
 
 
 function App() {
@@ -100,7 +101,7 @@ function App() {
             <Route index element={<SalespeopleList salespeople={salespeople} />} />
           </Route>
           <Route path="customers">
-            {/* <Route path="new" element={<CustomersForm />} /> */}
+            <Route path="new" element={<CustomersForm />} />
             <Route index element={<CustomersList customers={customers} />} />
           </Route>
         </Routes>
