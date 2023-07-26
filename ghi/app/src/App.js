@@ -9,12 +9,14 @@ import React, { useEffect, useState } from 'react';
 import ManufacturersList from './ManufacturersList';
 import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
+import CustomersList from './CustomersList';
 
 
-function App(props) {
+function App() {
   const [manufacturers, setManufacturers] = useState([]);
 
   const [salespeople, setSalespeople] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   async function loadManufacturers() {
     const response = await fetch('http://localhost:8100/api/manufacturers/');
@@ -32,7 +34,6 @@ function App(props) {
   }
 
 
-
   async function loadSalespeople() {
     const response = await fetch('http://localhost:8090/api/salespeople/');
     console.log(response);
@@ -47,10 +48,26 @@ function App(props) {
       console.error(response);
     }
   }
+
+  async function loadCustomers() {
+    const response = await fetch('http://localhost:8090/api/customers/');
+    console.log(response);
+
+    if (response.ok) {
+      // Gets customers data
+      const data = await response.json();
+      console.log('DATA: ', data);
+      // using customers data
+      setCustomers(data.customers);
+    } else {
+      console.error(response);
+    }
+  }
   
   useEffect(() => {
     loadManufacturers();
     loadSalespeople();
+    loadCustomers();
   },[]);
 
   if (manufacturers === undefined) {
@@ -58,6 +75,10 @@ function App(props) {
   }
 
   if (salespeople === undefined) {
+    return null;
+  }
+
+  if (customers === undefined) {
     return null;
   }
 
@@ -77,6 +98,10 @@ function App(props) {
           <Route path="salespeople">
             <Route path="new" element={<SalespeopleForm />} />
             <Route index element={<SalespeopleList salespeople={salespeople} />} />
+          </Route>
+          <Route path="customers">
+            {/* <Route path="new" element={<CustomersForm />} /> */}
+            <Route index element={<CustomersList customers={customers} />} />
           </Route>
         </Routes>
       </div>
