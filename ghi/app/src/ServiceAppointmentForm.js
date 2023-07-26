@@ -43,7 +43,7 @@ function ServiceAppointmentForm() {
         event.preventDefault();
         const data = {}
         data.vin = vin;
-        data.status = "booked";
+        data.status = "created";
         data.customer = customer;
         data.reason = reason;
         data.date_time = `${date} ${time}`;

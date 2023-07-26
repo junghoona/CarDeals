@@ -30,7 +30,7 @@ function ServiceAppointmentList () {
 
     const cancel = async (appointment) => {
 
-        const url = `http://localhost:8080/api/appointments/${appointment.vin}`
+        const url = `http://localhost:8080/api/appointments/${appointment.id}/cancel`
         const fetchConfig = {
             method: 'put',
             headers: {
@@ -41,19 +41,33 @@ function ServiceAppointmentList () {
 
         const response = await fetch(url, fetchConfig);
         const data = await response.json();
-    }
+        if (response.ok) {
+            setAppointments((prevAppointments) =>
+              prevAppointments.map((appt) =>
+                appt.id === appointment.id ? { ...appt, status: 'canceled' } : appt
+              )
+            );
+          }
+        }
 
     const finish = async (appointment) => {
-        const url = `http://localhost:8080/api/appointments/${appointment.vin}`
+        const url = `http://localhost:8080/api/appointments/${appointment.id}/finish`
         const fetchConfig = {
-            method: 'delete',
+            method: 'put',
             headers: {
                 'Content-Type': 'application/json',
             },
         };
         const response = await fetch(url, fetchConfig);
         const data = await response.json();
-    }
+        if (response.ok) {
+            setAppointments((prevAppointments) =>
+              prevAppointments.map((appt) =>
+                appt.id === appointment.id ? { ...appt, status: 'finished' } : appt
+              )
+            );
+          }
+        }
 
     const TechnicianName = (technicianId) => {
         const technician = technicians.find(tech => tech.employee_id === technicianId);
@@ -73,6 +87,7 @@ function ServiceAppointmentList () {
                     <th>Time</th>
                     <th>Technician</th>
                     <th>Reason</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,6 +100,7 @@ function ServiceAppointmentList () {
                             <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
                             <td>{TechnicianName(appointment.technician)}</td>
                             <td>{appointment.reason}</td>
+                            <td>{appointment.status}</td>
                             <td><button type="button" className="btn btn-danger" onClick={()=>cancel(appointment)}>Cancel</button></td>
                             <td><button type="button" className="btn btn-success" onClick={()=>finish(appointment)}>Finish</button></td>
                         </tr>
