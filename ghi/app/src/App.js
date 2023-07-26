@@ -9,7 +9,8 @@ import React, { useEffect, useState } from 'react';
 import ManufacturersList from './ManufacturersList';
 import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
-
+import ModelsList from './ModelsList';
+import AutomobilesList from './AutomobilesList';
 
 function App(props) {
   const [manufacturers, setManufacturers] = useState([]);
@@ -67,17 +68,24 @@ function App(props) {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+
+          <Route path="/manufacturers" element={<ManufacturersList />} />
+
+          <Route path="/models" element={<ModelsList />} />
+
+          <Route path="/automobiles" element={<AutomobilesList />} />
+
           <Route path="/technicians/" element={<TechnicianList />} />
           <Route path="/technicians/create" element={<TechnicianForm />} />
+
           <Route path="/appointments/" element={<ServiceAppointmentList />} />
           <Route path="/appointments/create" element={<ServiceAppointmentForm />} />
-          <Route path="manufacturers">
-            <Route index element={<ManufacturersList manufacturers={manufacturers} />} />
-          </Route>
+
           <Route path="salespeople">
             <Route path="new" element={<SalespeopleForm />} />
             <Route index element={<SalespeopleList salespeople={salespeople} />} />
           </Route>
+
         </Routes>
       </div>
     </BrowserRouter>
