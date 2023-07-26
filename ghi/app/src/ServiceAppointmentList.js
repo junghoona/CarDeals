@@ -3,6 +3,7 @@ import React, { useEffect, useState  } from 'react';
 function ServiceAppointmentList () {
     const [appointments, setAppointments] = useState([]);
     const [technicians, setTechnicians] = useState([]);
+    const [inventoryVin, setInventoryVin] = useState([]);
     const [vinSearch, setVinSearch] = useState("");
     const [vinResult, setVinResult] = useState([]);
 
@@ -22,9 +23,18 @@ function ServiceAppointmentList () {
         }
       };
 
+    const fetchInventoryVin = async () => {
+    const response = await fetch("http://localhost:8100/api/automobiles/");
+    if (response.ok) {
+        const data = await response.json();
+        setInventoryVin(data.autos);
+        }
+    };
+
     useEffect(() => {
         fetchData();
         fetchTechnicians();
+        fetchInventoryVin();
     }, []);
 
 // Handles search input field
@@ -80,10 +90,15 @@ function ServiceAppointmentList () {
         }
 
 // Find technician by id & returns full name
-    const TechnicianName = (technicianId) => {
+    const technicianName = (technicianId) => {
         const technician = technicians.find(tech => tech.employee_id === technicianId);
         return technician ? `${technician.first_name} ${technician.last_name}` : "";
       };
+
+// Check if appointment VIN matches any inventory VINs
+    const checkVinInInventory = (appointmentVin) => {
+        return inventoryVin.some((auto) => auto.vin === appointmentVin);
+    };
 
     return (
       <div className="container m-3">
@@ -103,6 +118,7 @@ function ServiceAppointmentList () {
             <thead>
               <tr>
                 <th>VIN</th>
+                <th>Is VIP?</th>
                 <th>Customer</th>
                 <th>Date</th>
                 <th>Time</th>
@@ -116,10 +132,11 @@ function ServiceAppointmentList () {
               {vinResult.length > 0 ? (vinResult.map(appointment => (
                 <tr key={appointment.vin}>
                     <td>{appointment.vin}</td>
+                    <td>{checkVinInInventory(appointment.vin) ? "Yes" : "No"}</td>
                     <td>{appointment.customer}</td>
                     <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
                     <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
-                    <td>{TechnicianName(appointment.technician)}</td>
+                    <td>{technicianName(appointment.technician)}</td>
                     <td>{appointment.reason}</td>
                     <td>{appointment.status}</td>
                     <td>
@@ -135,10 +152,11 @@ function ServiceAppointmentList () {
                 appointments.map(appointment => (
                 <tr key={appointment.vin}>
                     <td>{appointment.vin}</td>
+                    <td>{checkVinInInventory(appointment.vin) ? "Yes" : "No"}</td>
                     <td>{appointment.customer}</td>
                     <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
                     <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
-                    <td>{TechnicianName(appointment.technician)}</td>
+                    <td>{technicianName(appointment.technician)}</td>
                     <td>{appointment.reason}</td>
                     <td>{appointment.status}</td>
                     <td>
