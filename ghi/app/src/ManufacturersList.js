@@ -1,4 +1,4 @@
-function ManufacturersList(props) {
+function ManufacturersList({manufacturers}) {
     return (
         <table className="table table-striped table-hover">
           <thead>
@@ -8,7 +8,7 @@ function ManufacturersList(props) {
           </thead>
           <tbody>
             {/* loop over the shoes data stored in props.shoes */}
-            {props.manufacturers.map(manufacturer => {
+            {manufacturers.map(manufacturer => {
               return (
                 <tr key={manufacturer.id}>
                   <td>{ manufacturer.name }</td>
