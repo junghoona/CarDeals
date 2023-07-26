@@ -4,6 +4,7 @@ import Nav from './Nav';
 import React, { useEffect, useState } from 'react';
 import ManufacturersList from './ManufacturersList';
 import SalespeopleList from './SalespeopleList';
+import SalespeopleForm from './SalespeopleForm';
 
 
 function App(props) {
@@ -66,6 +67,7 @@ function App(props) {
             <Route index element={<ManufacturersList manufacturers={manufacturers} />} />
           </Route>
           <Route path="salespeople">
+            <Route path="new" element={<SalespeopleForm />} />
             <Route index element={<SalespeopleList salespeople={salespeople} />} />
           </Route>
         </Routes>
