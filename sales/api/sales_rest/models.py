@@ -7,7 +7,7 @@ class AutomobileVO(models.Model):
     sold = models.BooleanField(default=False)
 
     def get_api_url(self):
-        return reverse("", kwargs={"id": self.id})
+        return reverse("api_automobilevo", kwargs={"id": self.id})
 
 
 # Create your models here.
@@ -20,7 +20,7 @@ class Salesperson(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     def get_api_url(self):
-        return reverse("", kwargs={"id": self.id})
+        return reverse("api_salesperson", kwargs={"id": self.id})
 
 
 class Customer(models.Model):
@@ -33,7 +33,7 @@ class Customer(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     def get_api_url(self):
-        return reverse("", kwargs={"id": self.id})
+        return reverse("api_customer", kwargs={"id": self.id})
 
 
 class Sale(models.Model):
@@ -52,4 +52,4 @@ class Sale(models.Model):
         related_name="sales",
         on_delete=models.CASCADE,
     )
-    price = models.DecimalField(max_digits=20, decimal_places=2)
+    price = models.FloatField()

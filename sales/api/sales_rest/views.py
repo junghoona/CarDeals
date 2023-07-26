@@ -86,7 +86,6 @@ def api_lst_customers(request):
         )
 
 
-# TODO: Add Decorator tag ["DELETE", "GET", "PUT"]
 @require_http_methods(["GET", "DELETE"])
 def api_customer(request, id):
     if request.method == "GET":
@@ -172,7 +171,6 @@ def api_lst_sales(request):
         )
 
 
-# TODO: Add Decorator tag ["DELTE", "GET", "PUT"]
 @require_http_methods(["GET", "DELETE"])
 def api_sale(request, id):
     if request.method == "GET":
