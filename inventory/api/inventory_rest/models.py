@@ -6,7 +6,7 @@ class Manufacturer(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     def get_api_url(self):
-        return reverse("api_manufacturer", kwargs={"pk": self.id})
+        return reverse("api_manufacturer", kwargs={"id": self.id})
 
 
 class VehicleModel(models.Model):
@@ -20,7 +20,7 @@ class VehicleModel(models.Model):
     )
 
     def get_api_url(self):
-        return reverse("api_vehicle_model", kwargs={"pk": self.id})
+        return reverse("api_vehicle_model", kwargs={"id": self.id})
 
 
 class Automobile(models.Model):

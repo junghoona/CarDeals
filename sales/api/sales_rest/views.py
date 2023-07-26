@@ -27,19 +27,14 @@ def api_lst_salespeople(request):
             encoder=SalespersonEncoder,
         )
     else:
-        try:
-            content = json.loads(request.body)
-            print('CONTENT: ', content)
-            return JsonResponse(
-                encoder=SalespersonEncoder,
-                safe=False,
-            )
-        except Salesperson.DoesNotExist:
-            response = JsonResponse(
-                {"message": "ERROR: Could not create the salesperson"}
-            )
-            response.status_code = 400
-            return response
+        content = json.loads(request.body)
+
+        salesperson = Salesperson.objects.create(**content)
+        return JsonResponse(
+            salesperson,
+            encoder=SalespersonEncoder,
+            safe=False,
+        )
 
 
 # TODO: Add Decorator tag ["DELTE", "GET", "PUT"]
@@ -61,22 +56,17 @@ def api_lst_customers(request):
             encoder=CustomerEncoder,
         )
     else:
-        try:
-            content = json.loads(request.body)
-            print('CONTENT: ', content)
-            return JsonResponse(
-                encoder=CustomerEncoder,
-                safe=False,
-            )
-        except Customer.DoesNotExist:
-            response = JsonResponse(
-                {"message": "ERROR: Customer does not exist"}
-            )
-            response.status_code = 404
-            return response
+        content = json.loads(request.body)
+
+        customer = Customer.objects.create(**content)
+        return JsonResponse(
+            customer,
+            encoder=CustomerEncoder,
+            safe=False,
+        )
 
 
-# TODO: Add Decorator tag ["DELTE", "GET", "PUT"]
+# TODO: Add Decorator tag ["DELETE", "GET", "PUT"]
 def api_customer(request, id):
     customer = Customer.objects.get(id=id)
     return JsonResponse(
@@ -98,16 +88,54 @@ def api_lst_sales(request):
         try:
             content = json.loads(request.body)
             print('CONTENT: ', content)
+
+            vin = content["automobile"]
+
+            print('VIN: ', vin)
+            automobile = AutomobileVO.objects.get(id=vin)
+            content["automobile"] = automobile
+
+            salesperson_id = content["salesperson"]
+
+            print('SALESPERSON_ID: ', salesperson_id)
+            salesperson = Salesperson.objects.get(id=salesperson_id)
+            content["salesperson"] = salesperson
+
+            customer_id = content["customer"]
+
+            print('CUSTOMER_ID: ', customer_id)
+            customer = Customer.objects.get(id=customer_id)
+            content["customer"] = customer
+
+            sale = Sale.objects.create(**content)
+
             return JsonResponse(
+                sale,
                 encoder=SaleEncoder,
                 safe=False,
             )
-        except Sale.DoesNotExist:
-            response = JsonResponse(
-                {"message": "ERROR: Sale Does Not Exist"}
+        except AutomobileVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "ERROR: Automobile VO does not exist"},
+                status=400,
             )
-            response.status_code = 404
-            return response
+        except Salesperson.DoesNotExist:
+            return JsonResponse(
+                {"message": "ERROR: Salesperson does not exist"},
+                status=400,
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "ERROR: Customer does not exist"},
+                status=400,
+            )
+
+        sale = Sale.objects.create(**content)
+        return JsonResponse(
+            sale,
+            encoder=SaleEncoder,
+            safe=False,
+        )
 
 
 # TODO: Add Decorator tag ["DELTE", "GET", "PUT"]

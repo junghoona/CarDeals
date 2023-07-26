@@ -16,7 +16,7 @@ urlpatterns = [
         name="api_lst_salespeople",
     ),
     path(
-        "salespeople/",
+        "salespeople/<int:id>",
         api_salesperson,
         name="api_salesperson",
     ),
@@ -26,7 +26,7 @@ urlpatterns = [
         name="api_lst_customers",
     ),
     path(
-        "customers/",
+        "customers/<int:id>",
         api_customer,
         name="api_customer",
     ),
@@ -36,7 +36,7 @@ urlpatterns = [
         name="api_lst_sales",
     ),
     path(
-        "sales/",
+        "sales/<int:id>",
         api_sale,
         name="api_sale",
     )
