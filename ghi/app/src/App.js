@@ -5,8 +5,61 @@ import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';
 import ServiceAppointmentForm from './ServiceAppointmentForm';
 import ServiceAppointmentList from './ServiceAppointmentList';
+import React, { useEffect, useState } from 'react';
+import ManufacturersList from './ManufacturersList';
+import SalespeopleList from './SalespeopleList';
 
-function App() {
+
+function App(props) {
+  const [manufacturers, setManufacturers] = useState([]);
+
+  const [salespeople, setSalespeople] = useState([]);
+
+  async function loadManufacturers() {
+    const response = await fetch('http://localhost:8100/api/manufacturers/');
+    console.log(response);
+
+    if (response.ok) {
+      // Gets manufacturers data
+      const data = await response.json();
+      console.log('DATA: ', data);
+      // using manufacturers data
+      setManufacturers(data.manufacturers);
+    } else {
+      console.error(response);
+    }
+  }
+
+
+
+  async function loadSalespeople() {
+    const response = await fetch('http://localhost:8090/api/salespeople/');
+    console.log(response);
+  
+    if (response.ok) {
+      // Gets salespeople data
+      const data = await response.json();
+      console.log('DATA: ', data);
+      // using salespeople data
+      setSalespeople(data.salespeople);
+    } else {
+      console.error(response);
+    }
+  }
+  
+  useEffect(() => {
+    loadManufacturers();
+    loadSalespeople();
+  },[]);
+
+  if (manufacturers === undefined) {
+    return null;
+  }
+
+  if (salespeople === undefined) {
+    return null;
+  }
+
   return (
     <BrowserRouter>
       <Nav />
@@ -17,6 +70,12 @@ function App() {
           <Route path="/technicians/create" element={<TechnicianForm />} />
           <Route path="/appointments/" element={<ServiceAppointmentList />} />
           <Route path="/appointments/create" element={<ServiceAppointmentForm />} />
+          <Route path="manufacturers">
+            <Route index element={<ManufacturersList manufacturers={manufacturers} />} />
+          </Route>
+          <Route path="salespeople">
+            <Route index element={<SalespeopleList salespeople={salespeople} />} />
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>

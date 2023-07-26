@@ -30,7 +30,7 @@ def api_automobiles(request):
                 encoder=AutomobileEncoder,
                 safe=False,
             )
-        except:
+        except Automobile.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not create the automobile"}
             )
@@ -101,7 +101,7 @@ def api_manufacturers(request):
                 encoder=ManufacturerEncoder,
                 safe=False,
             )
-        except:
+        except Manufacturer.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not create the manufacturer"}
             )
@@ -110,10 +110,10 @@ def api_manufacturers(request):
 
 
 @require_http_methods(["DELETE", "GET", "PUT"])
-def api_manufacturer(request, pk):
+def api_manufacturer(request, id):
     if request.method == "GET":
         try:
-            manufacturer = Manufacturer.objects.get(id=pk)
+            manufacturer = Manufacturer.objects.get(id=id)
             return JsonResponse(
                 manufacturer,
                 encoder=ManufacturerEncoder,
@@ -125,7 +125,7 @@ def api_manufacturer(request, pk):
             return response
     elif request.method == "DELETE":
         try:
-            manufacturer = Manufacturer.objects.get(id=pk)
+            manufacturer = Manufacturer.objects.get(id=id)
             manufacturer.delete()
             return JsonResponse(
                 manufacturer,
@@ -137,7 +137,7 @@ def api_manufacturer(request, pk):
     else: # PUT
         try:
             content = json.loads(request.body)
-            manufacturer = Manufacturer.objects.get(id=pk)
+            manufacturer = Manufacturer.objects.get(id=id)
 
             props = ["name"]
             for prop in props:
@@ -175,7 +175,7 @@ def api_vehicle_models(request):
                 encoder=VehicleModelEncoder,
                 safe=False,
             )
-        except:
+        except VehicleModel.DoesNotExist:
             response = JsonResponse(
                 {"message": "Could not create the vehicle model"}
             )
@@ -184,10 +184,10 @@ def api_vehicle_models(request):
 
 
 @require_http_methods(["DELETE", "GET", "PUT"])
-def api_vehicle_model(request, pk):
+def api_vehicle_model(request, id):
     if request.method == "GET":
         try:
-            model = VehicleModel.objects.get(id=pk)
+            model = VehicleModel.objects.get(id=id)
             return JsonResponse(
                 model,
                 encoder=VehicleModelEncoder,
@@ -199,7 +199,7 @@ def api_vehicle_model(request, pk):
             return response
     elif request.method == "DELETE":
         try:
-            model = VehicleModel.objects.get(id=pk)
+            model = VehicleModel.objects.get(id=id)
             model.delete()
             return JsonResponse(
                 model,
@@ -211,7 +211,7 @@ def api_vehicle_model(request, pk):
     else: # PUT
         try:
             content = json.loads(request.body)
-            model = VehicleModel.objects.get(id=pk)
+            model = VehicleModel.objects.get(id=id)
             props = ["name", "picture_url"]
             for prop in props:
                 if prop in content:
