@@ -17,7 +17,6 @@ function SalespersonHistory () {
 
         if (response.ok) {
             const data = await response.json();
-
             setSalespeople(data.salespeople);
         } else {
             console.error(response);
@@ -29,7 +28,6 @@ function SalespersonHistory () {
 
         if (response.ok) {
             const data = await response.json();
-
             setSales(data.sales);
         } else {
             console.error(response);
@@ -51,7 +49,7 @@ function SalespersonHistory () {
                     {salespeople.map((salesperson) => {
                         return (
                             <option key={salesperson.id} value={salesperson.employee_id}>
-                                { salesperson.first_name } { salesperson.last_name }
+                                {salesperson.first_name} {salesperson.last_name}
                             </option>
                         );
                     })}
@@ -67,15 +65,15 @@ function SalespersonHistory () {
               </tr>
             </thead>
             <tbody>
-                { sales.filter(sale => {
+                {sales.filter(sale => {
                     return sale.salesperson.employee_id === salesperson
                 }).map(sale => {
                     return (
                         <tr key={sale.id}>
-                            <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
-                            <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
-                            <td>{ sale.automobile.vin }</td>
-                            <td>${ sale.price }.00</td>
+                            <td>{sale.salesperson.first_name} {sale.salesperson.last_name}</td>
+                            <td>{sale.customer.first_name} {sale.customer.last_name}</td>
+                            <td>{sale.automobile.vin}</td>
+                            <td>${sale.price}.00</td>
                         </tr>
                     )
                 })}

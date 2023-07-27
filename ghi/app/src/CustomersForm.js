@@ -9,13 +9,14 @@ function CustomersForm () {
 
     const fetchData = async() => {
         const response = await fetch('http://localhost:8090/api/customers/');
-            if (response.ok) {
-                const data = await response.json();
-                setCustomers(data.customers);
-            }
+        if (response.ok) {
+            const data = await response.json();
+            setCustomers(data.customers);
+        }
     }
 
-    useEffect(() => {fetchData();
+    useEffect(() => {
+        fetchData();
     }, []);
 
 

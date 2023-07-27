@@ -30,8 +30,8 @@ function ModelsList() {
             {models.map(model => {
               return (
                 <tr key={model.id}>
-                  <td>{ model.name }</td>
-                  <td>{ model.manufacturer.name }</td>
+                  <td>{model.name}</td>
+                  <td>{model.manufacturer.name}</td>
                   <td><img src={model.picture_url} width="250px" height="125px"/></td>
                 </tr>
               );

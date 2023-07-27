@@ -29,7 +29,7 @@ function SalespeopleList() {
             </tr>
           </thead>
           <tbody>
-            {/* loop over the shoes data stored in props.shoes */}
+            {/* loop over the salespeople data stored in salespeople */}
             {salespeople.map(salesperson => {
               return (
                 <tr key={salesperson.id}>

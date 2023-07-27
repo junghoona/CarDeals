@@ -26,7 +26,6 @@ function ModelForm() {
         e.preventDefault();
 
         const url = 'http://localhost:8100/api/models/';
-
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(formData),
@@ -36,7 +35,6 @@ function ModelForm() {
         };
 
         const response = await fetch(url, fetchConfig);
-
         if (response.ok) {
             setFormData({
                 name: '',

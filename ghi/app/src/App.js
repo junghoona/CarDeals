@@ -56,7 +56,6 @@ function App() {
             <Route index element={<SalesList />} />
             <Route path="history" element={<SalesPersonHistory />} />
           </Route>
-
         </Routes>
       </div>
     </BrowserRouter>
