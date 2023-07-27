@@ -250,7 +250,118 @@ Getting a list of Automobile Return Value:
  - Put Inventory API documentation here. This is optional if you have time, otherwise prioritize the other services.
 ​
 ### Service API
- - Put Service API documentation here
+
+The Service microservice allows the user to create and view service appointments, as well as technicians. It has models for Technician, Appointment, and AutomobileVO. These models respond to API endpoints on the backend, while webpages on the frontend also allow the user to send different types of requests. 
+
+Two special features implemented are managing both VIP and appointment status. If the VIN of an appointment, matches a VIN in inventory, the Service Appointment page will flag the appointment as VIP. The user may also control the appointment status with the 'cancel' and 'finish' buttons on the Service Appointment page. The Service Appointment page allows the user to search for appointments through filtering with a VIN.
+
+## Accessing Endpoints to Send and View Data - Access through Insomnia:
+
+### Technicians:
+
+
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List technicians | GET | http://localhost:8080/api/technicians/
+| Create a technicians | POST | http://localhost:8080/api/technicians/
+| Show a specific technicians | GET | http://localhost:8080/api/technicians/id/
+
+To create a Technician (SEND THIS JSON BODY):
+```
+{
+	"first_name": "John",
+	"last_name": "Doe",
+	"employee_id": 1
+}
+```
+Return Value of Creating a Technician:
+```
+{
+	"first_name": "John",
+	"last_name": "Doe",
+	"employee_id": 1,
+	"id": 1
+}
+```
+Return value of Listing all Technician:
+```
+{
+	"technicians": [
+		{
+			"first_name": "John",
+			"last_name": "Doe",
+			"employee_id": "1",
+			"id": 1
+		},
+		{
+			"first_name": "Jane",
+			"last_name": "Doe",
+			"employee_id": "2",
+			"id": 2
+		},
+	]
+}
+```
+### Appointments:
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List appointments | GET | http://localhost:8080/api/appointments/
+| Appointment details | GET | http://localhost:8080/api/appointments/id
+| Create an appointment | POST | http://localhost:8080/api/appointments/
+| Delete an appointment | DELETE | http://localhost:8080/api/appointments/id
+| Cancel an appointment | PUT | http://localhost:8080/api/appointments/:id/cancel
+| Finish an appointment | PUT | http://localhost:8080/api/appointments/:id/finish
+
+
+To create an appointment (SEND THIS JSON BODY):
+```
+{
+	"date_time": "2023-07-30T12:00:00+00:00",
+	"reason": "Oil Change",
+	"status": "Submitted",
+	"vin": "12345678910121314",
+	"customer": "John Doe",
+	"technician": 1
+}
+```
+Return Value of creating an appointment:
+```
+{
+	"date_time": "2023-07-30T12:00:00+00:00",
+	"reason": "Oil Change",
+	"status": "Submitted",
+	"vin": "12345678910121314",
+	"customer": "John Doe",
+	"technician": "1",
+	"id": 1
+}
+```
+List all appointments Return Value:
+```
+{
+	"appointments": [
+		{
+			"date_time": "2023-07-31T14:12:00+00:00",
+			"reason": "Oil Change",
+			"status": "finished",
+			"vin": "1C3CC5FB2AN120174",
+			"customer": "John Doe",
+			"technician": "1",
+			"id": 1
+		},
+		{
+			"date_time": "2023-07-31T12:00:00+00:00",
+			"reason": "Oil Change",
+			"status": "created",
+			"vin": "12345678910121315",
+			"customer": "Jane Doe",
+			"technician": "2",
+			"id": 2
+		},
+	]
+}
+```
+
 ​
 ### Sales API
 **TODO: EDIT HERE**
