@@ -10,34 +10,10 @@ from .views import (
 )
 
 urlpatterns = [
-    path(
-        "salespeople/",
-        api_lst_salespeople,
-        name="api_lst_salespeople",
-    ),
-    path(
-        "salespeople/<int:id>",
-        api_salesperson,
-        name="api_salesperson",
-    ),
-    path(
-        "customers/",
-        api_lst_customers,
-        name="api_lst_customers",
-    ),
-    path(
-        "customers/<int:id>",
-        api_customer,
-        name="api_customer",
-    ),
-    path(
-        "sales/",
-        api_lst_sales,
-        name="api_lst_sales",
-    ),
-    path(
-        "sales/<int:id>",
-        api_sale,
-        name="api_sale",
-    )
+    path("salespeople/", api_lst_salespeople, name="api_lst_salespeople"),
+    path("salespeople/<int:id>", api_salesperson, name="api_salesperson"),
+    path("customers/", api_lst_customers, name="api_lst_customers"),
+    path("customers/<int:id>", api_customer, name="api_customer"),
+    path("sales/", api_lst_sales, name="api_lst_sales"),
+    path("sales/<int:id>", api_sale, name="api_sale"),
 ]

@@ -66,7 +66,7 @@ function SalesForm () {
 
     const fetchAutomobileVO = async() => {
         const response = await fetch('http://localhost:8100/api/automobiles/');
-        
+
         if (response.ok) {
             const data = await response.json();
             setAutomobileVO(data.autos.filter(auto => !auto.sold))
@@ -150,7 +150,7 @@ function SalesForm () {
                         </div>
                         <label htmlFor="price">Price</label>
                         <div className="mb-3">
-                            <input onChange={handlePriceChange} required type="price" name="price" id="price" className="form-control" value={ price } />
+                            <input onChange={handlePriceChange} required type="price" name="price" id="price" className="form-control" value={price} />
                         </div>
                         <button className="btn btn-primary">Create</button>
                     </form>

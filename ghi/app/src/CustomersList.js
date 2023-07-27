@@ -30,14 +30,13 @@ function CustomersList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* loop over the shoes data stored in props.shoes */}
                     {customers.map(customer => {
                     return (
                         <tr key={customer.id}>
-                        <td>{ customer.first_name }</td>
-                        <td>{ customer.last_name }</td>
-                        <td>{ customer.phone_number }</td>
-                        <td>{ customer.address }</td>
+                        <td>{customer.first_name}</td>
+                        <td>{customer.last_name}</td>
+                        <td>{customer.phone_number}</td>
+                        <td>{customer.address}</td>
                         </tr>
                     );
                     })}

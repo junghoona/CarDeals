@@ -1,5 +1,7 @@
 # CarCar
 
+CarCar is a starter application that consists of microservices 
+
 Team:
 
 * Julius Pagtakhan - Service API

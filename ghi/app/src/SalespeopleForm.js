@@ -30,7 +30,6 @@ function SalespeopleForm ({ loadSalespeople }) {
         const response = await fetch(url, fetchConfig);
         if (response.ok) {
             const newSalesperson = await response.json();
-            console.log(newSalesperson);
 
             setFirstName('');
             setLastName('');
