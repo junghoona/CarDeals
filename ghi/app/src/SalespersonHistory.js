@@ -44,33 +44,21 @@ function SalespersonHistory () {
         fetchSales();
     }, []);
 
-    // console.log('SALESPERSON: ' , salesperson); 
-    console.log('SALES: ', sales);
-    console.log('SALESPERSON: ', salesperson);
-
-    const filteredSales = [];
-    if (salesperson) {
-        filteredSales = sales.filter(sale => sale.salesperson.id === salesperson);
-    } else {
-        filteredSales = sales
-    }
-
     return (
         <div className="container m-3">
         <h1>Salesperson History</h1>
-            <label htmlFor="vin">Automobile VIN</label>
-                <div className="mb-3">
-                    <select onChange={handleSalespersonChange} required type="salesperson" id="salesperson" className="form-select" value={salesperson} >
-                        <option value="">Choose a salesperson</option>
-                        {salespeople.map((salesperson) => {
-                            return (
-                                <option key={salesperson.id} value={salesperson.id}>
-                                    { salesperson.first_name } { salesperson.last_name }
-                                </option>
-                            );
-                        })}
-                    </select>
-                </div>
+            <div className="mb-3">
+                <select onChange={handleSalespersonChange} required type="salesperson" id="salesperson" className="form-select" value={salesperson} >
+                    <option value="">Choose a salesperson</option>
+                    {salespeople.map((salesperson) => {
+                        return (
+                            <option key={salesperson.id} value={salesperson.employee_id}>
+                                { salesperson.first_name } { salesperson.last_name }
+                            </option>
+                        );
+                    })}
+                </select>
+            </div>
           <table className="table table-striped table-hover">
             <thead>
               <tr>
@@ -81,19 +69,22 @@ function SalespersonHistory () {
               </tr>
             </thead>
             <tbody>
-                { filteredSales.map(sale => (
-                    <tr key={sale.id}>
-                        <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
-                        <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
-                        <td>{ sale.automobile.vin }</td>
-                        <td>${ sale.price }.00</td>
-                    </tr>
-
-                ))}
+                { sales.filter(sale => {
+                    return sale.salesperson.employee_id === salesperson
+                }).map(sale => {
+                    return (
+                        <tr key={sale.id}>
+                            <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
+                            <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                            <td>{ sale.automobile.vin }</td>
+                            <td>${ sale.price }.00</td>
+                        </tr>
+                    )
+                })}
             </tbody>
           </table>
         </div>
     );
-}
+};
 
 export default SalespersonHistory;
