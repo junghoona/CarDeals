@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react";
 function ModelsList() {
   const [models, setModels] = useState([]);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   const getData = async () => {
     const response = await fetch("http://localhost:8100/api/models");
     if (response.ok) {
@@ -14,6 +10,10 @@ function ModelsList() {
       setModels(data.models);
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="container m-3">

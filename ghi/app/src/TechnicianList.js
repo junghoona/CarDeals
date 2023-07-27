@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react";
 function TechnicianList() {
   const [technicians, setTechnician] = useState([]);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   const getData = async () => {
     const response = await fetch("http://localhost:8080/api/technicians/");
     if (response.ok) {
@@ -15,6 +11,9 @@ function TechnicianList() {
     }
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="container m-3">

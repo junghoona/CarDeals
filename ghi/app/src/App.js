@@ -1,10 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
-import TechnicianList from './TechnicianList';
-import TechnicianForm from './TechnicianForm';
-import ServiceAppointmentForm from './ServiceAppointmentForm';
-import ServiceAppointmentList from './ServiceAppointmentList';
 import React, { useEffect, useState } from 'react';
 import ManufacturersList from './ManufacturersList';
 import ManufacturerForm from './ManufacturerForm';
@@ -18,7 +14,11 @@ import CustomersList from './CustomersList';
 import CustomersForm from './CustomersForm';
 import SalesList from './SalesList';
 import SalesForm from './SalesForm';
-import SalesPersonHistory from './SalespersonHistory'
+import SalesPersonHistory from './SalespersonHistory';
+import TechnicianList from './TechnicianList';
+import TechnicianForm from './TechnicianForm';
+import ServiceAppointmentForm from './ServiceAppointmentForm';
+import ServiceAppointmentList from './ServiceAppointmentList';
 
 function App() {
   return (

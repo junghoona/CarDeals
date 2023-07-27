@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react";
 function AutomobilesList() {
   const [automobiles, setAutomobiles] = useState([]);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   const getData = async () => {
     const response = await fetch("http://localhost:8100/api/automobiles");
     if (response.ok) {
@@ -14,6 +10,10 @@ function AutomobilesList() {
       setAutomobiles(data.autos);
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="container m-3">

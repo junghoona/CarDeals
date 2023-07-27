@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 function ServiceAppointmentForm() {
-    const [technicians, setTechnicians] = useState([])
-    const [technician, setTechnician] = useState("")
-    const [vin, setVin] = useState("")
-    const [customer, setCustomer] = useState("")
-    const [date, setDate] = useState("")
-    const [time, setTime] = useState("")
-    const [reason, setReason] = useState("")
+    const [technicians, setTechnicians] = useState([]);
+    const [technician, setTechnician] = useState("");
+    const [vin, setVin] = useState("");
+    const [customer, setCustomer] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [reason, setReason] = useState("");
 
     const handleTechnicianChange = (event) => {
         const value = event.target.value;
