@@ -41,21 +41,27 @@ docker-compose up
   
 ​
 ## Diagram
- - Put diagram here
+ - Project-beta Diagram : 
+  ![Img] (/images/project-beta diagram.png)
 ​
 ## API Documentation
-​
-### URLs and Ports
+### Inventory API (Optional)
 
-**TODO: Edit Here** 
+The Inventory API houses the RESTful endpints for the following entities :
+    - Manufacturer : contains information pertaining to company that manufactures the automobile
+    - VehicleModel : contains information pertaining to the model of a vehicle created by the manufacturer
+    - Automobile : contains information pertaining to the actual automobile of a specific vehicle model
+​
+
+**CRUD Route for Inventory API**
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List manufacturers | GET | http://localhost:8100/api/manufacturers/
 | Create a manufacturer | POST | http://localhost:8100/api/manufacturers/ |
-| Get a specific manufacturer | GET | http://localhost:8100/api/manufacturers/id/
-| Update a specific manufacturer | PUT | http://localhost:8100/api/manufacturers/id/
-| Delete a specific manufacturer | DELETE | http://localhost:8100/api/manufacturers/id/
+| Get a specific manufacturer | GET | http://localhost:8100/api/manufacturers/<int:id>/
+| Update a specific manufacturer | PUT | http://localhost:8100/api/manufacturers/<int:id>/
+| Delete a specific manufacturer | DELETE | http://localhost:8100/api/manufacturers/<int:id>/
 
 
 JSON body to send data:
@@ -94,9 +100,9 @@ Getting a list of manufacturers return value:
 | ----------- | ----------- | ----------- |
 | List vehicle models | GET | http://localhost:8100/api/models/
 | Create a vehicle model | POST | http://localhost:8100/api/models/
-| Get a specific vehicle model | GET | http://localhost:8100/api/models/id/
-| Update a specific vehicle model | PUT | http://localhost:8100/api/models/id/
-| Delete a specific vehicle model | DELETE | http://localhost:8100/api/models/id/
+| Get a specific vehicle model | GET | http://localhost:8100/api/models/<int:id>/
+| Update a specific vehicle model | PUT | http://localhost:8100/api/models/<int:id>/
+| Delete a specific vehicle model | DELETE | http://localhost:8100/api/models/<int:id>/
 
 Create and update a vehicle model (SEND THIS JSON BODY):
 ```
@@ -155,9 +161,9 @@ Getting a List of Vehicle Models Return Value:
 | ----------- | ----------- | ----------- |
 | List automobiles | GET | http://localhost:8100/api/automobiles/
 | Create an automobile | POST | http://localhost:8100/api/automobiles/
-| Get a specific automobile | GET | http://localhost:8100/api/automobiles/vin/
-| Update a specific automobile | PUT | http://localhost:8100/api/automobiles/vin/
-| Delete a specific automobile | DELETE | http://localhost:8100/api/automobiles/vin/
+| Get a specific automobile | GET | http://localhost:8100/api/automobiles/<str:vin>/
+| Update a specific automobile | PUT | http://localhost:8100/api/automobiles/<str:vin>/
+| Delete a specific automobile | DELETE | http://localhost:8100/api/automobiles/<str:vin>/
 
 
 Create an automobile (SEND THIS JSON BODY):
@@ -247,10 +253,7 @@ Getting a list of Automobile Return Value:
   ]
 }
 
-### Inventory API (Optional)
 
- - Put Inventory API documentation here. This is optional if you have time, otherwise prioritize the other services.
-​
 ### Service API
 
 The Service microservice allows the user to create and view service appointments, as well as technicians. It has models for Technician, Appointment, and AutomobileVO. These models respond to API endpoints on the backend, while webpages on the frontend also allow the user to send different types of requests. 
@@ -266,7 +269,7 @@ Two special features implemented are managing both VIP and appointment status. I
 | ----------- | ----------- | ----------- |
 | List technicians | GET | http://localhost:8080/api/technicians/
 | Create a technicians | POST | http://localhost:8080/api/technicians/
-| Show a specific technicians | GET | http://localhost:8080/api/technicians/id/
+| Show a specific technicians | GET | http://localhost:8080/api/technicians/<int:id>/
 
 To create a Technician (SEND THIS JSON BODY):
 ```
@@ -308,11 +311,11 @@ Return value of Listing all Technician:
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List appointments | GET | http://localhost:8080/api/appointments/
-| Appointment details | GET | http://localhost:8080/api/appointments/id
+| Appointment details | GET | http://localhost:8080/api/appointments/<int:id>
 | Create an appointment | POST | http://localhost:8080/api/appointments/
-| Delete an appointment | DELETE | http://localhost:8080/api/appointments/id
-| Cancel an appointment | PUT | http://localhost:8080/api/appointments/:id/cancel
-| Finish an appointment | PUT | http://localhost:8080/api/appointments/:id/finish
+| Delete an appointment | DELETE | http://localhost:8080/api/appointments/<int:id>
+| Cancel an appointment | PUT | http://localhost:8080/api/appointments/<int:id>/cancel
+| Finish an appointment | PUT | http://localhost:8080/api/appointments/<int:id>/finish
 
 
 To create an appointment (SEND THIS JSON BODY):
@@ -366,10 +369,21 @@ List all appointments Return Value:
 
 ​
 ### Sales API
-**TODO: EDIT HERE**
+
+The Sales microservice allows the user to create an automobile sale transaction involving an unsold car that is listed in the inventory. This microservice has 4 models:
+
+    - Salesperson : This model contains first name, last name, and employee id fields
+    - Customer : This model contains first name, last name, address, and phone number fields
+    - Sale : This model contains a price field and instances of the automobile, customer, and salesperson models.
+    - Automobile Value Object (VO) : This model contains vin and sold field, indicating whether the vehicle has been sold or not.
+
+These models respond to API endpoints on the backend, while webpages on the frontend also allow the user to send different types of requests.
 
 
-On the backend, the sales microservice has 4 models: AutomobileVO, Customer, SalesPerson, and SalesRecord. SalesRecord is the model that interacts with the other three models. This model gets data from the three other models.
+
+The features implemented are CRUD operations for salepeople, customers, as well as recording a new sale. When recording a new sale, the application filters automobiles that have been marked as sold.
+
+The Salesperson History feature displays a list of the sales transaction history for a salesperson, which can be selected via the dropdown. When the dropdown selection changes, show all of the sales associated with the selected salesperson. The list of sales should contain the salesperson, the customer, the automobile VIN, and the price of the sale.
 
 The AutomobileVO is a value object that gets data about the automobiles in the inventory using a poller. The sales poller automotically polls the inventory microservice for data, so the sales microservice is constantly getting the updated data.
 
@@ -379,13 +393,11 @@ The reason for integration between these two microservices is that when recordin
 ## Accessing Endpoints to Send and View Data - Access through Insomnia:
 
 ### Customers:
-
-
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List customers | GET | http://localhost:8090/api/customers/
 | Create a customer | POST | http://localhost:8090/api/customers/
-| Show a specific customer | GET | http://localhost:8090/api/customers/id/
+| Show a specific customer | GET | http://localhost:8090/api/customers/<int:id>/
 
 To create a Customer (SEND THIS JSON BODY):
 ```
@@ -427,9 +439,9 @@ Return value of Listing all Customers:
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List salespeople | GET | http://localhost:8090/api/salespeople/
-| Salesperson details | GET | http://localhost:8090/api/salesperson/id/
+| Salesperson details | GET | http://localhost:8090/api/salesperson/<int:id>/
 | Create a salesperson | POST | http://localhost:8090/api/salespeople/
-| Delete a salesperson | DELETE | http://localhost:8090/api/salesperson/id/
+| Delete a salesperson | DELETE | http://localhost:8090/api/salesperson/<int:id>/
 
 
 To create a salesperson (SEND THIS JSON BODY):
@@ -466,7 +478,7 @@ List all salespeople Return Value:
 | ----------- | ----------- | ----------- |
 | List all salesrecords | GET | http://localhost:8090/api/salesrecords/
 | Create a new sale | POST | http://localhost:8090/api/salesrecords/
-| Show salesperson's salesrecords | GET | http://localhost:8090/api/salesrecords/id/
+| Show salesperson's salesrecords | GET | http://localhost:8090/api/salesrecords/<int:id>/
 List all Salesrecords Return Value:
 ```
 {
@@ -543,4 +555,8 @@ Show a Salesperson's Salesrecord Return Value:
 }
 ​
 ## Value Objects
- - Identification of value objects for each service goes here
+
+**AutomobileVO Model:
+
+Both the Sales and Service microservices utilize AutomobileVO models, which are value objects. AutomobileVO contains 'VIN' and 'sold' fields which are polled every 60 seconds from the Automobile model in the Inventory API.
+
