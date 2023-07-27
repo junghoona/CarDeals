@@ -7,9 +7,11 @@ import ServiceAppointmentForm from './ServiceAppointmentForm';
 import ServiceAppointmentList from './ServiceAppointmentList';
 import React, { useEffect, useState } from 'react';
 import ManufacturersList from './ManufacturersList';
+import ManufacturerForm from './ManufacturerForm';
 import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
 import ModelsList from './ModelsList';
+import ModelForm from './ModelForm';
 import AutomobilesList from './AutomobilesList';
 
 function App(props) {
@@ -19,12 +21,10 @@ function App(props) {
 
   async function loadManufacturers() {
     const response = await fetch('http://localhost:8100/api/manufacturers/');
-    console.log(response);
 
     if (response.ok) {
       // Gets manufacturers data
       const data = await response.json();
-      console.log('DATA: ', data);
       // using manufacturers data
       setManufacturers(data.manufacturers);
     } else {
@@ -36,12 +36,10 @@ function App(props) {
 
   async function loadSalespeople() {
     const response = await fetch('http://localhost:8090/api/salespeople/');
-    console.log(response);
   
     if (response.ok) {
       // Gets salespeople data
       const data = await response.json();
-      console.log('DATA: ', data);
       // using salespeople data
       setSalespeople(data.salespeople);
     } else {
@@ -70,8 +68,10 @@ function App(props) {
           <Route path="/" element={<MainPage />} />
 
           <Route path="/manufacturers" element={<ManufacturersList />} />
+          <Route path="/manufacturers/create" element={<ManufacturerForm />} />
 
           <Route path="/models" element={<ModelsList />} />
+          <Route path="/models/create" element={<ModelForm />} />
 
           <Route path="/automobiles" element={<AutomobilesList />} />
 

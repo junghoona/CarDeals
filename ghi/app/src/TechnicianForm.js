@@ -51,7 +51,7 @@ function TechnicianForm(props) {
     return (
         <div className="row">
           <div className="offset-3 col-6">
-            <div className="shadow p-4 mt-4">
+            <div className="border rounded p-4 mt-4">
               <h1>Add a Technician</h1>
               <form onSubmit={handleSubmit} id="create-location-form">
                 <div className="form-floating mb-3">

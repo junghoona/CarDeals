@@ -56,7 +56,7 @@ function ServiceAppointmentList () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ satus: 'canceled' }),
+            body: JSON.stringify({ status: 'canceled' }),
         };
         const response = await fetch(url, fetchConfig);
 // Updates Status column field to 'canceled' when cancel button is clicked
