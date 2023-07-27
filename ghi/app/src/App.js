@@ -12,6 +12,7 @@ import SalespeopleForm from './SalespeopleForm';
 import CustomersList from './CustomersList';
 import CustomersForm from './CustomersForm';
 import SalesList from './SalesList';
+import SalesForm from './SalesForm';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   const [salespeople, setSalespeople] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [sales, setSales] = useState([]);
+  const [automobileVO, setAutomobileVO] = useState([]);
 
   async function loadManufacturers() {
     const response = await fetch('http://localhost:8100/api/manufacturers/');
@@ -28,7 +30,7 @@ function App() {
     if (response.ok) {
       // Gets manufacturers data
       const data = await response.json();
-      console.log('DATA: ', data);
+      // console.log('DATA: ', data);
       // using manufacturers data
       setManufacturers(data.manufacturers);
     } else {
@@ -44,7 +46,7 @@ function App() {
     if (response.ok) {
       // Gets salespeople data
       const data = await response.json();
-      console.log('DATA: ', data);
+      // console.log('DATA: ', data);
       // using salespeople data
       setSalespeople(data.salespeople);
     } else {
@@ -59,7 +61,7 @@ function App() {
     if (response.ok) {
       // Gets customers data
       const data = await response.json();
-      console.log('DATA: ', data);
+      // console.log('CUSTOMERS: ', data);
       // using customers data
       setCustomers(data.customers);
     } else {
@@ -74,9 +76,26 @@ function App() {
     if (response.ok) {
       // Gets sales data
       const data = await response.json();
-      console.log('SALES: ', data);
+      // console.log('SALES: ', data);
       // using sales data
       setSales(data.sales);
+    } else {
+      console.error(response);
+    }
+  }
+
+  async function loadAutomobileVO() {
+    const response = await fetch('http://localhost:8100/api/automobiles/');
+    console.log(response);
+
+    if (response.ok) {
+      // Gets automobile VO data
+      const data = await response.json();
+      // console.log('AUTO VO: ', data);
+      // using autovo data
+      if (data.autos.sold === false) {
+        setAutomobileVO(data.autos);
+      }
     } else {
       console.error(response);
     }
@@ -87,6 +106,7 @@ function App() {
     loadSalespeople();
     loadCustomers();
     loadSales();
+    loadAutomobileVO();
   },[]);
 
   if (manufacturers === undefined) {
@@ -105,6 +125,10 @@ function App() {
     return null;
   }
 
+  if (automobileVO === undefined) {
+    return null;
+  }
+
   return (
     <BrowserRouter>
       <Nav />
@@ -118,16 +142,16 @@ function App() {
           <Route path="manufacturers">
             <Route index element={<ManufacturersList manufacturers={manufacturers} />} />
           </Route>
-          <Route path="salespeople">
-            <Route path="new" element={<SalespeopleForm />} />
+          <Route path="salespeople/">
+            <Route path="create" element={<SalespeopleForm />} />
             <Route index element={<SalespeopleList salespeople={salespeople} />} />
           </Route>
-          <Route path="customers">
-            <Route path="new" element={<CustomersForm />} />
+          <Route path="customers/">
+            <Route path="create" element={<CustomersForm />} />
             <Route index element={<CustomersList customers={customers} />} />
           </Route>
-          <Route path="sales">
-            {/* <Route path="new" element={<SalesForm />} /> */}
+          <Route path="sales/">
+            <Route path="create" element={<SalesForm />} />
             <Route index element={<SalesList sales={sales} />} />
           </Route>
         </Routes>
