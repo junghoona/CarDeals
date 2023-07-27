@@ -24,7 +24,6 @@ function ModelForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const url = 'http://localhost:8100/api/models/';
         const fetchConfig = {
             method: "post",
@@ -47,7 +46,6 @@ function ModelForm() {
     const handleFormChange = (e) => {
         const value = e.target.value;
         const inputName = e.target.name;
-
         setFormData({
             ...formData,
             [inputName]: value
