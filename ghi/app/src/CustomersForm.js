@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function CustomersForm ({ loadCustomers }) {
+function CustomersForm () {
     const [firstName, setFirstName] = useState([]); 
     const [lastName, setLastName] = useState([]);
     const [address, setAddress] = useState([]);
