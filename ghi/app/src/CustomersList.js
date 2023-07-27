@@ -1,4 +1,22 @@
-function CustomersList({customers}) {
+import React, { useEffect, useState } from 'react';
+
+function CustomersList() {
+    const [customers, setCustomers] = useState([]);
+
+    const fetchData = async() => {
+        const response = await fetch('http://localhost:8090/api/customers/');
+        if (response.ok) {
+            const data = await response.json();
+            setCustomers(data.customers);
+        } else {
+            console.error(response);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <div className="container m-3">
             <h1>Customers</h1>

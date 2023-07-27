@@ -9,7 +9,6 @@ function SalespersonHistory () {
 
     const handleSalespersonChange = (event) => {
         const value = event.target.value;
-        console.log('VALUE: ', value);
         setSalesperson(value);
     }
 
@@ -18,7 +17,6 @@ function SalespersonHistory () {
 
         if (response.ok) {
             const data = await response.json();
-            // console.log('SALESPEOPLE: ', data);
 
             setSalespeople(data.salespeople);
         } else {
@@ -31,7 +29,6 @@ function SalespersonHistory () {
 
         if (response.ok) {
             const data = await response.json();
-            // console.log('SALES: ', data);
 
             setSales(data.sales);
         } else {
@@ -43,6 +40,7 @@ function SalespersonHistory () {
         fetchSalespeople();
         fetchSales();
     }, []);
+
 
     return (
         <div className="container m-3">

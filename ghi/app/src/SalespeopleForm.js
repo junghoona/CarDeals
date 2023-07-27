@@ -4,19 +4,8 @@ function SalespeopleForm ({ loadSalespeople }) {
     const [firstName, setFirstName] = useState([]); 
     const [lastName, setLastName] = useState([]);
     const [employeeId, setEmployeeId] = useState([]);
+
     const [salespeople, setSalespeople] = useState([]); 
-
-    const fetchData = async() => {
-        const response = await fetch('http://localhost:8090/api/salespeople/');
-            if (response.ok) {
-                const data = await response.json();
-                setSalespeople(data.salespeople);
-            }
-    }
-
-    useEffect(() => {fetchData();
-    }, []);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -66,6 +55,21 @@ function SalespeopleForm ({ loadSalespeople }) {
         const value = event.target.value;
         setEmployeeId(value);
     }
+
+    const fetchData = async() => {
+        const response = await fetch('http://localhost:8090/api/salespeople/');
+        
+        if (response.ok) {
+            const data = await response.json();
+            setSalespeople(data.salespeople);
+        } else {
+            console.error(response);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
     <div className="row">

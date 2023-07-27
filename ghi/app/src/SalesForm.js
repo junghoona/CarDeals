@@ -35,7 +35,6 @@ function SalesForm () {
         const response = await fetch(url, fetchConfig);
         if (response.ok) {
             const newSale = await response.json();
-            console.log('NEW SALE: ', newSale);
 
             setSalesperson('');
             setCustomer('');
@@ -64,15 +63,12 @@ function SalesForm () {
         const value = event.target.value;
         setPrice(value);
     }
-    
 
     const fetchAutomobileVO = async() => {
         const response = await fetch('http://localhost:8100/api/automobiles/');
-
+        
         if (response.ok) {
             const data = await response.json();
-            console.log('AUTO VO: ', data);
-
             setAutomobileVO(data.autos.filter(auto => !auto.sold))
         } else {
             console.error(response);
@@ -84,8 +80,6 @@ function SalesForm () {
 
         if (response.ok) {
             const data = await response.json();
-            console.log('SALESPEOPLE: ', data);
-
             setSalespeople(data.salespeople);
         } else {
             console.error(response);
@@ -97,8 +91,6 @@ function SalesForm () {
 
         if (response.ok) {
             const data = await response.json();
-            console.log('CUSTOMERS: ', data);
-
             setCustomers(data.customers);
         } else {
             console.error(response);
@@ -117,7 +109,6 @@ function SalesForm () {
                 <div className="shadow p-4 mt-4">
                     <h1 className="text-left">Record a new sale</h1>
                     <form id="create-appointment-form" onSubmit={handleSubmit}>
-                        
                         <label htmlFor="vin">Automobile VIN</label>
                         <div className="mb-3">
                             <select onChange={handleVINChange} required type="automobile" id="automobile" className="form-select" value={vin} >
@@ -131,7 +122,6 @@ function SalesForm () {
                                 })}
                             </select>
                         </div>
-                    
                         <label htmlFor="salesperson">Salesperson</label>
                         <div className="mb-3">
                             <select onChange={handleSalespersonChange} required type="salesperson" id="salesperson" className="form-select" value={salesperson} >
@@ -145,7 +135,6 @@ function SalesForm () {
                                 })}
                             </select>
                         </div>
-                    
                         <label htmlFor="customer">Customer</label>
                         <div className="mb-3">
                             <select onChange={handleCustomerChange} required type="customer" id="customer" className="form-select" value={customer} >
@@ -159,12 +148,10 @@ function SalesForm () {
                                 })}
                             </select>
                         </div>
-
                         <label htmlFor="price">Price</label>
                         <div className="mb-3">
                             <input onChange={handlePriceChange} required type="price" name="price" id="price" className="form-control" value={ price } />
                         </div>
-
                         <button className="btn btn-primary">Create</button>
                     </form>
                 </div>

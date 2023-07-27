@@ -1,4 +1,23 @@
-function SalesList({sales}) {
+import React, { useEffect, useState } from 'react';
+
+function SalesList() {
+    const [sales, setSales] = useState([]);
+
+    const fetchData = async () => {
+        const response = await fetch('http://localhost:8090/api/sales/');
+
+        if (response.ok) {
+            const data = await response.json();
+            setSales(data.sales);
+        } else {
+            console.error(response);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
       <div className="container m-3">
         <h1>Sales</h1>
