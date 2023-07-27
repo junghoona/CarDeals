@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react';
 
-function AutomobileForm({getAutomobiles}) {
+function AutomobileForm() {
   const [models, setModels] = useState([]);
   const [model, setModel] = useState('');
   const [color, setColor] = useState('');
@@ -43,7 +43,6 @@ function AutomobileForm({getAutomobiles}) {
       setYear('');
       setColor('');
       setVin('');
-      getAutomobiles('');
     }
   }
 

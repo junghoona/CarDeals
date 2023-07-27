@@ -112,35 +112,37 @@ def api_show_appointment(request, pk):
             )
 
 
-@require_http_methods(["PUT"])
+@require_http_methods(["PUT"])  # Handle "PUT" request to cancel appointment
 def api_cancel_appointment(request, pk):
-    try:
-        appointment = Appointment.objects.get(id=pk)
-        appointment.status = "canceled"
-        appointment.save()
-        return JsonResponse(
-            {"status": "canceled"},
-            status=200,
-        )
-    except Appointment.DoesNotExist:
-        return JsonResponse(
-            {"error": "Appointment not found"},
-            status=404,
-        )
+    if request.method == "PUT":
+        try:
+            appointment = Appointment.objects.get(id=pk)
+            appointment.status = "canceled"
+            appointment.save()
+            return JsonResponse(
+                {"status": "canceled"},
+                status=200,
+            )
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"error": "Appointment not found"},
+                status=404,
+            )
 
 
-@require_http_methods(["PUT"])
+@require_http_methods(["PUT"])  # Handle "PUT" request to finish appointment
 def api_finish_appointment(request, pk):
-    try:
-        appointment = Appointment.objects.get(id=pk)
-        appointment.status = "finished"
-        appointment.save()
-        return JsonResponse(
-            {"status": "finished"},
-            status=200,
-        )
-    except Appointment.DoesNotExist:
-        return JsonResponse(
-            {"error": "Appointment not found"},
-            status=404,
-        )
+    if request.method == "PUT":
+        try:
+            appointment = Appointment.objects.get(id=pk)
+            appointment.status = "finished"
+            appointment.save()
+            return JsonResponse(
+                {"status": "finished"},
+                status=200,
+            )
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"error": "Appointment not found"},
+                status=404,
+            )
