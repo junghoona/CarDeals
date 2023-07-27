@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 
 function ManufacturersList() {
   const [manufacturers, setManufacturers] = useState([]);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const fetchData = async() => {
+    const response = await fetch('http://localhost:8100/api/manufacturers/');
 
-  const getData = async () => {
-    const response = await fetch("http://localhost:8100/api/manufacturers");
     if (response.ok) {
       const data = await response.json();
       setManufacturers(data.manufacturers);
+    } else {
+      console.error(response);
     }
-  };
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
-    <div className="container m-3">
-      <h1>Manufacturers</h1>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
+    <table className="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {manufacturers.map(manufacturer => {
+          return (
+            <tr key={manufacturer.id}>
+              <td>{ manufacturer.name }</td>
             </tr>
-          </thead>
-          <tbody>
-            {manufacturers.map(manufacturer => {
-              return (
-                <tr key={manufacturer.id}>
-                  <td>{ manufacturer.name }</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        </div>
-    );
+          );
+        })}
+      </tbody>
+    </table>
+  );
 }
 
 export default ManufacturersList;

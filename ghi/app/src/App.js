@@ -8,58 +8,18 @@ import ServiceAppointmentList from './ServiceAppointmentList';
 import React, { useEffect, useState } from 'react';
 import ManufacturersList from './ManufacturersList';
 import ManufacturerForm from './ManufacturerForm';
-import SalespeopleList from './SalespeopleList';
-import SalespeopleForm from './SalespeopleForm';
 import ModelsList from './ModelsList';
 import ModelForm from './ModelForm';
 import AutomobilesList from './AutomobilesList';
+import SalespeopleList from './SalespeopleList';
+import SalespeopleForm from './SalespeopleForm';
+import CustomersList from './CustomersList';
+import CustomersForm from './CustomersForm';
+import SalesList from './SalesList';
+import SalesForm from './SalesForm';
+import SalesPersonHistory from './SalespersonHistory'
 
-function App(props) {
-  const [manufacturers, setManufacturers] = useState([]);
-
-  const [salespeople, setSalespeople] = useState([]);
-
-  async function loadManufacturers() {
-    const response = await fetch('http://localhost:8100/api/manufacturers/');
-
-    if (response.ok) {
-      // Gets manufacturers data
-      const data = await response.json();
-      // using manufacturers data
-      setManufacturers(data.manufacturers);
-    } else {
-      console.error(response);
-    }
-  }
-
-
-
-  async function loadSalespeople() {
-    const response = await fetch('http://localhost:8090/api/salespeople/');
-  
-    if (response.ok) {
-      // Gets salespeople data
-      const data = await response.json();
-      // using salespeople data
-      setSalespeople(data.salespeople);
-    } else {
-      console.error(response);
-    }
-  }
-  
-  useEffect(() => {
-    loadManufacturers();
-    loadSalespeople();
-  },[]);
-
-  if (manufacturers === undefined) {
-    return null;
-  }
-
-  if (salespeople === undefined) {
-    return null;
-  }
-
+function App() {
   return (
     <BrowserRouter>
       <Nav />
@@ -80,10 +40,21 @@ function App(props) {
 
           <Route path="/appointments/" element={<ServiceAppointmentList />} />
           <Route path="/appointments/create" element={<ServiceAppointmentForm />} />
-
-          <Route path="salespeople">
-            <Route path="new" element={<SalespeopleForm />} />
-            <Route index element={<SalespeopleList salespeople={salespeople} />} />
+          <Route path="manufacturers">
+            <Route index element={<ManufacturersList />} />
+          </Route>
+          <Route path="salespeople/">
+            <Route path="create" element={<SalespeopleForm />} />
+            <Route index element={<SalespeopleList />} />
+          </Route>
+          <Route path="customers/">
+            <Route path="create" element={<CustomersForm />} />
+            <Route index element={<CustomersList />} />
+          </Route>
+          <Route path="sales/">
+            <Route path="create" element={<SalesForm />} />
+            <Route index element={<SalesList />} />
+            <Route path="history" element={<SalesPersonHistory />} />
           </Route>
 
         </Routes>
