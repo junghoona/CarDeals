@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 
 function AutomobilesList() {
   const [automobiles, setAutomobiles] = useState([]);
+  const [vinsSold, setVinsSold] = useState([]);
 
-  const getData = async () => {
+  const fetchData = async () => {
     const response = await fetch("http://localhost:8100/api/automobiles");
     if (response.ok) {
       const data = await response.json();
@@ -11,9 +12,24 @@ function AutomobilesList() {
     }
   };
 
+  const fetchSales = async () => {
+    const response = await fetch('http://localhost:8090/api/sales/');
+
+    if (response.ok) {
+      const data = await response.json();
+      setVinsSold(data.sales.map(sale => sale.automobile.vin));
+    }
+  };
+
   useEffect(() => {
-    getData();
+      fetchData();
+      fetchSales();
   }, []);
+
+  // Check if automobile VIN matches any VINs in Sales list
+  const checkVinSold = (automobileVin) => {
+    return vinsSold.includes(automobileVin);
+  };
 
   return (
     <div className="container m-3">
@@ -38,7 +54,7 @@ function AutomobilesList() {
                   <td>{ automobile.year }</td>
                   <td>{ automobile.model.name }</td>
                   <td>{ automobile.model.manufacturer.name }</td>
-                  <td>{automobile.sold ? "Yes" : "No"}</td>
+                  <td>{ checkVinSold(automobile.vin) ? "Yes" : "No" }</td>
                 </tr>
               );
             })}
