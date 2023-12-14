@@ -1,6 +1,6 @@
-# CarCar
+# CarDeals
 
-CarCar is a starter application that consists of microservices 
+CarDeals is a starter application that consists of microservices 
 
 Team:
 
